@@ -22,7 +22,7 @@ def load_data(fake_csv, true_csv):
     true['class'] = 0  # Marking true news as class 0
     return pd.concat([fake, true], ignore_index=True)
 
-
+#Data cleaning...
 def preprocess_text(text):
     text = text.lower()
     text = re.sub('\[.*?\]', '', text)
