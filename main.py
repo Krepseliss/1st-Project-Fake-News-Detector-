@@ -9,11 +9,10 @@ import re
 import string
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import classification_report
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.pipeline import Pipeline
 
 def load_data(fake_csv, true_csv):
     fake = pd.read_csv('Fake.csv')
@@ -22,42 +21,38 @@ def load_data(fake_csv, true_csv):
     true['class'] = 0  # Marking true news as class 0
     return pd.concat([fake, true], ignore_index=True)
 
-#Data cleaning...
-def preprocess_text(text):
-    text = text.lower()
-    text = re.sub('\[.*?\]', '', text)
-    text = re.sub('\\W', " ", text)
-    text = re.sub('https?://\S+|www\.\S+', '', text)
-    text = re.sub('<.*?>+', "", text)
-    text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
-    text = re.sub('\n', '', text)
-    text = re.sub('\w*\d\w*', '', text)
-    return text
+class TextPreprocessor(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        pass
 
-def preprocess_data(data):
-    data['text'] = data['text'].apply(preprocess_text)
-    return data
+    def fit(self, X, y=None):
+        return self
 
-from models import train_models
+    def transform(self, X):
+        preprocessed_texts = []
+        for text in X:
+            text = text.lower()
+            text = re.sub('\[.*?\]', '', text)
+            text = re.sub('\\W', " ", text)
+            text = re.sub('https?://\S+|www\.\S+', '', text)
+            text = re.sub('<.*?>+', "", text)
+            text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+            text = re.sub('\n', '', text)
+            text = re.sub('\w*\d\w*', '', text)
+            preprocessed_texts.append(text)
+        return preprocessed_texts
 
-def evaluate_models(models, x_test, y_test):
-    for name, model in models.items():
-        pred = model.predict(x_test)
-        print(f"{name} Classification Report:\n{classification_report(y_test, pred)}\n")
+pipeline = Pipeline([
+    ('preprocessor', TextPreprocessor()),
+    ('vectorizer', TfidfVectorizer()),
+    ('classifier', MultinomialNB())
+])
 
-def vectorize_data(x_train, x_test):
-    vectorizer = TfidfVectorizer()
-    xv_train = vectorizer.fit_transform(x_train)
-    xv_test = vectorizer.transform(x_test)
-    return vectorizer, xv_train, xv_test
+def manual_test(news, pipeline):
+    processed_news = [news]
+    prediction = pipeline.predict(processed_news)[0]
+    print(f"Prediction: {'Possibly Hoax' if prediction == 1 else 'You can read it!'}")
 
-
-def manual_test(news, models, vectorizer):
-    processed_news = preprocess_text(news)
-    vectorized_news = vectorizer.transform([processed_news])
-    for name, model in models.items():
-        prediction = model.predict(vectorized_news)[0]
-        print(f"{name} Prediction: {'Possibly Hoax' if prediction == 1 else 'You can read it!'}")
 
 
 def main():
@@ -68,18 +63,17 @@ def main():
     # Split data
     x_train, x_test, y_train, y_test = train_test_split(data['text'], data['class'], test_size=0.25, random_state=42)
 
-    # Vectorize text data and get the vectorizer
-    vectorizer, xv_train, xv_test = vectorize_data(x_train, x_test)  # Capture the vectorizer here
+    # Train model
+    models = pipeline.fit(x_train, y_train)
 
-    # Train models
-    models = train_models(xv_train, y_train)
-
-    # Evaluate models
-    evaluate_models(models, xv_test, y_test)
+    # Evaluate model
+    predictions = pipeline.predict(x_test)
+    print(classification_report(y_test, predictions))
 
     # Ask for user input for manual testing
     news = input("Paste your article: ")
-    manual_test(news, models, vectorizer)  # Pass the vectorizer to manual_test
+    manual_test(news, pipeline)
 
 if __name__ == "__main__":
     main()
+
