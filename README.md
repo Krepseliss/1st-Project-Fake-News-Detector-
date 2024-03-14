@@ -1,6 +1,6 @@
 #PROJECT STATUS: Currently trying to optimize the code and make it more efficient and fast in terms of complexity...
 
-#Download the CSVs used: https://fastupload.io/CzirZodWFEXquUa/file (CSVs are too large to upload on GitHub :( )
+#Download the CSVs used: https://fastupload.io/CzirZodWFEXquUa/file (CSVs are too large to upload on GitHub!)
 
 #CHANGELOG#
 -> 10/3/2024:
