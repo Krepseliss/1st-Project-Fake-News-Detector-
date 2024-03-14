@@ -58,7 +58,6 @@ def manual_test(news, pipeline):
 def main():
     # Load and preprocess data
     data = load_data('Fake.csv', 'True.csv')
-    data = preprocess_data(data)
 
     # Split data
     x_train, x_test, y_train, y_test = train_test_split(data['text'], data['class'], test_size=0.25, random_state=42)
