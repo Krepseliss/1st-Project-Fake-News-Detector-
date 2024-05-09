@@ -1,4 +1,5 @@
-#PROJECT STATUS: WORKING✅
+#WORKING STATUS: 🟢
+🟠 - Under Maintenance, 🟢 - Working, 🔴 - Not Working
 
 #Download the CSVs used: https://drive.google.com/file/d/1Y8BTsQ6BnVq3hxrQDDEBfznNeGavIrhh/view?usp=drive_link (CSVs are too large to upload on GitHub!)
 
