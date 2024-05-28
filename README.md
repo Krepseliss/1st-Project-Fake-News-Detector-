@@ -21,7 +21,7 @@
 <ul>
   <li><strong>10/3/2024:</strong></li>
   <ul>
-    <li>Added a single pipeline to handle vectorization, text preprocessing, and classification.</li>
+    <li>Added a single pipeline to handle vectorization, text preprocessing and classification.</li>
     <li>Data leakage prevention</li>
     <li>Used Naive Bayes Classifier as the main algorithm for more robustness.</li>
     <li>Significant overfitting reduction</li>
