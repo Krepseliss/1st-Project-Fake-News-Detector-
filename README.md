@@ -9,7 +9,7 @@
 <h1 style="text-align: center;">STATUS: 🟢</h1>
 
 <p style="text-align: center;">
-  <strong>🟠 - Under Maintenance, 🟢 - Working, 🔴 - Not Working</strong>
+  <strong>🟠 - Working but in Testing phase, 🟢 - Working, 🔴 - Not Working</strong>
 </p>
 
 <p style="text-align: center;">
