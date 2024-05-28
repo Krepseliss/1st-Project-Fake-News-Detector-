@@ -21,13 +21,17 @@
 <ul>
   <li><strong>10/3/2024:</strong></li>
   <ul>
-    <li>Added a single pipeline to handle vectorization, text preprocessing and classification.</li>
+    <li>Added a single pipeline to handle vectorization, text preprocessing, and classification.</li>
     <li>Data leakage prevention</li>
     <li>Used Naive Bayes Classifier as the main algorithm for more robustness.</li>
     <li>Significant overfitting reduction</li>
     <li>"models.py" no longer needed</li>
   </ul>
 </ul>
+
+<p style="text-align: center;">
+  CHECK MY LATEST WORK: <a href="https://github.com/Krepseliss/maNand-XBOX-360-">https://github.com/Krepseliss/maNand-XBOX-360-</a>
+</p>
 
 </body>
 </html>
